@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+import { NavigationBar } from "@/layout";
 
 export const metadata: Metadata = {
   title: "InstaFollows",
@@ -14,7 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="container mx-auto">{children}</body>
+      <body className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-slate-900 overflow-x-hidden">
+        <NavigationBar />
+
+        {children}
+      </body>
     </html>
   );
 }
