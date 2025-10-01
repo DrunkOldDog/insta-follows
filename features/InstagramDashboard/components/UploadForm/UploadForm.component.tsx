@@ -16,7 +16,7 @@ export default function UploadFormComponent({
 
   return (
     <form action={handleSubmit}>
-      <div className="flex gap-6 mb-6">
+      <div className="flex flex-col sm:flex-row gap-6 mb-6">
         <DropzoneInput name="followers" label="Followers" />
         <DropzoneInput name="following" label="Following" />
       </div>
