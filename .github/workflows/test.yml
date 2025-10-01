@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    name: Run Tests Before Merging To Main
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
