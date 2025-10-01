@@ -1,0 +1,37 @@
+{
+  "relationships_following": [
+    {
+      "title": "",
+      "media_list_data": [],
+      "string_list_data": [
+        {
+          "href": "https://www.instagram.com/gabo949",
+          "value": "gabo949",
+          "timestamp": 1758546806
+        }
+      ]
+    },
+    {
+      "title": "",
+      "media_list_data": [],
+      "string_list_data": [
+        {
+          "href": "https://www.instagram.com/alita_peredo",
+          "value": "alita_peredo",
+          "timestamp": 1757509378
+        }
+      ]
+    },
+    {
+      "title": "",
+      "media_list_data": [],
+      "string_list_data": [
+        {
+          "href": "https://www.instagram.com/ichibirisss",
+          "value": "ichibirisss",
+          "timestamp": 1757361602
+        }
+      ]
+    }
+  ]
+}
