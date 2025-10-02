@@ -53,7 +53,7 @@ export default function HeroSectionComponent() {
           <Link href="/analyze">
             <MotionButton
               size="lg"
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold"
+              variant="fancy"
               initial={{
                 opacity: 0,
                 y: 30,

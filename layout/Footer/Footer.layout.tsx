@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Github, Coffee } from "lucide-react";
+import { LogoText } from "@/components/shared";
 import { MotionButton } from "@/components/ui";
 import Link from "next/link";
 
@@ -17,10 +18,8 @@ export default function FooterComponent() {
           className="text-center space-y-8"
         >
           {/* App branding */}
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-              Instafollows
-            </h3>
+          <div className="space-y-1">
+            <LogoText className="text-3xl" />
             <p className="text-gray-400 max-w-md mx-auto">
               Find the assholes that don't follow you back on Instagram.
             </p>
@@ -50,7 +49,7 @@ export default function FooterComponent() {
               rel="noopener noreferrer"
             >
               <MotionButton
-                className="group flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+                variant="fancy"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

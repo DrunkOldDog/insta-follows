@@ -1,4 +1,4 @@
-import { AnimatedBackground, NavigationBar } from "@/layout";
+import { AnimatedBackground, Footer, NavigationBar } from "@/layout";
 
 import type { Metadata } from "next";
 
@@ -20,6 +20,7 @@ export default function RootLayout({
         <NavigationBar />
         <AnimatedBackground />
         {children}
+        <Footer />
       </body>
     </html>
   );
