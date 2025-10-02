@@ -60,6 +60,6 @@ const MotionButtonBase: typeof Button = ({ className, ...props }) => (
   <Button className={cn("transition-none", className)} {...props} />
 );
 
-const MotionButton = motion(MotionButtonBase);
+const MotionButton = motion.create(MotionButtonBase, { forwardMotionProps: true });
 
 export { Button, MotionButton, buttonVariants };
