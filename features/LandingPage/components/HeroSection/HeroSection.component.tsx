@@ -49,21 +49,29 @@ export default function HeroSectionComponent() {
             following you back with our secure, privacy-focused tool.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1 }}
-            className="mb-16"
+          <MotionButton
+            size="lg"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold"
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            whileHover={{
+              scale: 1.05,
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{
+              duration: 1,
+              delay: 1,
+              scale: {
+                delay: 0,
+                duration: 0.3,
+              },
+            }}
           >
-            <MotionButton
-              size="lg"
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105"
-              whileHover={{ scale: 1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Analyze My Followers
-            </MotionButton>
-          </motion.div>
+            Analyze My Followers
+          </MotionButton>
         </motion.div>
       </div>
     </motion.section>
