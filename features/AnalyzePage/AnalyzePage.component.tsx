@@ -14,11 +14,15 @@ export default function AnalyzePageComponent() {
   const [results, setResults] = useState<string[]>([]);
 
   const handleFollowersFile = (file: File) => {
+    if (!file) return; // happening when having an error
+
     setFollowersFile(file);
     setStep(2);
   };
 
   const handleFollowingFile = (file: File) => {
+    if (!file) return; // happening when having an error
+
     onGetResults(file);
     setStep(3);
   };
@@ -45,7 +49,7 @@ export default function AnalyzePageComponent() {
   return (
     <section className="py-24 pb-48">
       <div className="container mx-auto px-6">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <AnimatePresence mode="wait">
             {/* Step 1 */}
             {step === 1 && (
@@ -100,7 +104,11 @@ export default function AnalyzePageComponent() {
                 <FollowersReport nonFollowers={results} />
 
                 <div className="mt-8 flex gap-3">
-                  <MotionButton size="lg" variant="outline" onClick={onStartOver}>
+                  <MotionButton
+                    size="lg"
+                    variant="outline"
+                    onClick={onStartOver}
+                  >
                     Start Over
                   </MotionButton>
 

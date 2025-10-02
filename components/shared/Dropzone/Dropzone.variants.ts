@@ -15,7 +15,7 @@ export const dropzoneVariants = cva(
         dragActive: "border-primary bg-primary/10",
         disabled: "opacity-50 cursor-not-allowed",
         error:
-          "border-destructive bg-destructive/5 hover:border-destructive/70",
+          "border-destructive bg-destructive/30 hover:border-destructive/70",
         success: "border-primary/50",
       },
     },
