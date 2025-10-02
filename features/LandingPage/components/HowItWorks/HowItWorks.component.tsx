@@ -1,31 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Upload, Users, BarChart3 } from "lucide-react";
 
-const steps = [
-  {
-    icon: Upload,
-    title: "Upload Followers",
-    description:
-      "Upload the followers file provided by Instagram from your account settings.",
-    step: "01",
-  },
-  {
-    icon: Users,
-    title: "Upload Following",
-    description:
-      "Upload the following file from Instagram to get your complete following list.",
-    step: "02",
-  },
-  {
-    icon: BarChart3,
-    title: "Get Results",
-    description:
-      "Our algorithm compares both files and shows you who doesn't follow you back.",
-    step: "03",
-  },
-];
+import { howItWorksSteps } from "../../constants";
 
 export default function HowItWorksComponent() {
   return (
@@ -46,12 +23,13 @@ export default function HowItWorksComponent() {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {steps.map((step, index) => (
+          {howItWorksSteps.map((step, index) => (
             <motion.div
               key={index}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full hover:bg-white/10 transition-all duration-300 group"
+              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full hover:bg-white/10 transition-colors duration-300 group"
             >
               <div className="flex items-center justify-between mb-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
