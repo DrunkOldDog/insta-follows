@@ -2,7 +2,7 @@
 
 import { MotionButton } from "@/components/ui";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 
 export default function HeroSectionComponent() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,13 +12,14 @@ export default function HeroSectionComponent() {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const zIndex = useTransform(scrollYProgress, [0, 0.3], [10, -1]);
 
   return (
     <motion.section
       ref={containerRef}
-      style={{ y, opacity }}
-      className="relative z-10"
+      style={{ y, opacity, zIndex }}
+      className="relative"
     >
       <div className="container mx-auto px-6 py-24 flex items-center justify-center min-h-screen">
         <motion.div
