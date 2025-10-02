@@ -2,7 +2,8 @@
 
 import { MotionButton } from "@/components/ui";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef, useMemo } from "react";
+import Link from "next/link";
+import { useRef } from "react";
 
 export default function HeroSectionComponent() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,29 +50,31 @@ export default function HeroSectionComponent() {
             following you back with our secure, privacy-focused tool.
           </motion.p>
 
-          <MotionButton
-            size="lg"
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold"
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            whileHover={{
-              scale: 1.05,
-            }}
-            whileTap={{ scale: 0.95 }}
-            transition={{
-              duration: 1,
-              delay: 1,
-              scale: {
-                delay: 0,
-                duration: 0.3,
-              },
-            }}
-          >
-            Analyze My Followers
-          </MotionButton>
+          <Link href="/analyze">
+            <MotionButton
+              size="lg"
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold"
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{
+                duration: 1,
+                delay: 1,
+                scale: {
+                  delay: 0,
+                  duration: 0.3,
+                },
+              }}
+            >
+              Analyze My Followers
+            </MotionButton>
+          </Link>
         </motion.div>
       </div>
     </motion.section>
