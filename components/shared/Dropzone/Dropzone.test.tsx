@@ -81,7 +81,7 @@ describe("Dropzone", () => {
 
       render(<Dropzone {...defaultProps} />);
 
-      expect(screen.getByText("1 file rejected")).toBeInTheDocument();
+      expect(screen.getByText("File type not accepted")).toBeInTheDocument();
     });
 
     it("should show error state when files are rejected", () => {
@@ -170,7 +170,7 @@ describe("Dropzone", () => {
 
       render(<Dropzone {...defaultProps} maxSize={5 * 1024 * 1024} />); // 5MB limit
 
-      expect(screen.getByText("1 file rejected")).toBeInTheDocument();
+      expect(screen.getByText("File is too large")).toBeInTheDocument();
     });
   });
 });

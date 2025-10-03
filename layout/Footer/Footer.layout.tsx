@@ -3,12 +3,12 @@
 import { motion } from "motion/react";
 import { Github, Coffee } from "lucide-react";
 import { LogoText } from "@/components/shared";
-import { MotionButton } from "@/components/ui";
+import { MotionButton } from "@/components/shared/MotionButton";
 import Link from "next/link";
 
 export default function FooterComponent() {
   return (
-    <footer className="py-14 bg-gradient-to-b from-black/20 to-black/40">
+    <footer className="py-14 bg-gradient-to-b from-transparent to-black/60">
       <div className="container mx-auto px-6 relative z-10">
         {/* Main content */}
         <motion.div
@@ -34,12 +34,12 @@ export default function FooterComponent() {
             >
               <MotionButton
                 variant="outline"
-                className="group flex items-center gap-2"
+                className="group flex items-center gap-2 text-gray-200"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Github className="w-5 h-5 text-gray-400" />
-                <span className="text-gray-300">View on GitHub</span>
+                <Github className="w-5 h-5" />
+                <span>View on GitHub</span>
               </MotionButton>
             </Link>
 
@@ -49,6 +49,7 @@ export default function FooterComponent() {
               rel="noopener noreferrer"
             >
               <MotionButton
+                disabled
                 variant="fancy"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

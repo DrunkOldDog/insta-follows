@@ -6,7 +6,7 @@ import { howItWorksSteps } from "../../constants";
 
 export default function HowItWorksComponent() {
   return (
-    <section className="py-24 pb-48 bg-gradient-to-b from-transparent to-black/20">
+    <section className="py-24 pb-48 bg-gradient-to-b">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

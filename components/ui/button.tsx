@@ -1,7 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { motion } from "motion/react";
 import * as React from "react";
 
 const buttonVariants = cva(
@@ -19,7 +18,8 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        fancy: "bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold",
+        fancy:
+          "bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -56,10 +56,4 @@ function Button({
   );
 }
 
-const MotionButtonBase: typeof Button = ({ className, ...props }) => (
-  <Button className={cn("transition-none", className)} {...props} />
-);
-
-const MotionButton = motion.create(MotionButtonBase);
-
-export { Button, MotionButton, buttonVariants };
+export { Button, buttonVariants };

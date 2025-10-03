@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionButton } from "@/components/ui";
+import { MotionButton } from "@/components/shared/MotionButton";
 import { motion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
 import { useRef } from "react";

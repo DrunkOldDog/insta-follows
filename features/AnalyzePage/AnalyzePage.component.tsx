@@ -2,7 +2,7 @@
 
 import { getNonFollowers } from "@/actions";
 import { Dropzone } from "@/components/shared";
-import { MotionButton } from "@/components/ui";
+import { MotionButton } from "@/components/shared/MotionButton";
 import { FollowersReport } from "@/features/InstagramDashboard/components";
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
@@ -38,7 +38,7 @@ export default function AnalyzePageComponent() {
   };
 
   const onStartOver = () => {
-    setStep(1);
+    setStep(AnalyzeStepEnum.Followers);
     setResults([]);
     setFollowersFile(null);
   };
@@ -98,7 +98,7 @@ export default function AnalyzePageComponent() {
                   size="lg"
                   variant="outline"
                   onClick={onPrevStep}
-                  className="mt-8"
+                  className="mt-8 float-right"
                 >
                   Back
                 </MotionButton>
@@ -124,7 +124,7 @@ export default function AnalyzePageComponent() {
                     Start Over
                   </MotionButton>
 
-                  <MotionButton size="lg" variant="fancy">
+                  <MotionButton size="lg" variant="fancy" disabled>
                     Save Results
                   </MotionButton>
                 </div>
