@@ -80,6 +80,15 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
       return "Drag and drop or click to upload";
     };
 
+    const getRejectedFilesText = () => {
+      if (fileRejections.length === 1)
+        return fileRejections[0].errors[0].message;
+      if (fileRejections.length > 1 && fileRejections.length < 3) {
+        return fileRejections.map((file) => file.errors[0].message).join(", ");
+      }
+      return `${fileRejections.length} files rejected`;
+    };
+
     return (
       <div
         {...getRootProps()}
@@ -113,9 +122,8 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
             </div>
 
             {fileRejections.length > 0 && (
-              <div className="mt-2 text-sm text-destructive">
-                {fileRejections.length} file
-                {fileRejections.length > 1 ? "s" : ""} rejected
+              <div className="mt-1 text-sm text-destructive">
+                {getRejectedFilesText()}
               </div>
             )}
           </div>
