@@ -2,3 +2,6 @@ yarn-error.log
 node_modules
 instagram/*
 .next
+.env
+.env.local
+.vscode
