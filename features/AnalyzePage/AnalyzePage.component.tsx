@@ -1,12 +1,17 @@
 "use client";
 
-import { getNonFollowers } from "@/actions";
+import { getNonFollowers, saveResultsSnapshot } from "@/actions";
 import { Dropzone } from "@/components/shared";
 import { MotionButton } from "@/components/shared/MotionButton";
+import { Spinner } from "@/components/ui";
 import { FollowersReport } from "@/features/InstagramDashboard/components";
 import { AnimatePresence } from "motion/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { MotionStepCard } from "./components";
+
+import type { NonFollowersResult } from "@/types";
+import type { User } from "@supabase/supabase-js";
 
 enum AnalyzeStepEnum {
   Followers,
@@ -14,10 +19,17 @@ enum AnalyzeStepEnum {
   Results,
 }
 
-export default function AnalyzePageComponent() {
+interface AnalyzePageProps {
+  user: User | null;
+}
+
+export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
   const [step, setStep] = useState(AnalyzeStepEnum.Followers);
   const [followersFile, setFollowersFile] = useState<File | null>(null);
-  const [results, setResults] = useState<string[]>([]);
+  const [followingFile, setFollowingFile] = useState<File | null>(null);
+  const [results, setResults] = useState<NonFollowersResult | null>(null);
+  const [loading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleFollowersFile = (file: File) => {
     if (!file) return; // happening when having an error
@@ -28,9 +40,7 @@ export default function AnalyzePageComponent() {
 
   const handleFollowingFile = (file: File) => {
     if (!file) return; // happening when having an error
-
-    onGetResults(file);
-    setStep(AnalyzeStepEnum.Results);
+    void onGetResults(file);
   };
 
   const onPrevStep = () => {
@@ -39,7 +49,7 @@ export default function AnalyzePageComponent() {
 
   const onStartOver = () => {
     setStep(AnalyzeStepEnum.Followers);
-    setResults([]);
+    setResults(null);
     setFollowersFile(null);
   };
 
@@ -50,7 +60,24 @@ export default function AnalyzePageComponent() {
 
     const results = await getNonFollowers(formData);
     setResults(results);
+    setFollowingFile(followingFile);
     setStep(AnalyzeStepEnum.Results);
+  };
+
+  const handleSaveResults = async () => {
+    setIsLoading(true);
+    const result = await saveResultsSnapshot(
+      followersFile!,
+      followingFile!,
+      results!
+    );
+    setIsLoading(false);
+
+    if (result.success) {
+      router.push("/compare");
+    } else {
+      console.error(result.error);
+    }
   };
 
   return (
@@ -113,7 +140,7 @@ export default function AnalyzePageComponent() {
                 title="Analysis Results"
                 description="Your analysis is complete. Here are the results of your Instagram follower analysis."
               >
-                <FollowersReport nonFollowers={results} />
+                <FollowersReport nonFollowers={results?.nonFollowers || []} />
 
                 <div className="mt-8 flex gap-3 justify-end">
                   <MotionButton
@@ -124,7 +151,14 @@ export default function AnalyzePageComponent() {
                     Start Over
                   </MotionButton>
 
-                  <MotionButton size="lg" variant="fancy" disabled>
+                  <MotionButton
+                    size="lg"
+                    variant="fancy"
+                    onClick={handleSaveResults}
+                    disabled={!user || loading}
+                    title={!user ? "Please log in to save your results" : ""}
+                  >
+                    {loading && <Spinner />}
                     Save Results
                   </MotionButton>
                 </div>

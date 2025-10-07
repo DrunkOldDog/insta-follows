@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import CodeInput from "./CodeInput.component";
 
 describe("CodeInput", () => {
@@ -14,12 +14,16 @@ describe("CodeInput", () => {
     });
   });
 
-  it("should submit the code when the code is 6 digits", () => {
+  it("should submit the code when the code is 6 digits", async () => {
     const onCodeSubmit = jest.fn();
     render(<CodeInput name="code" onCodeSubmit={onCodeSubmit} />);
-    fireEvent.change(screen.getByRole("textbox"), {
-      target: { value: "123456" },
-    });
+
+    await act(async () =>
+      fireEvent.change(screen.getByRole("textbox"), {
+        target: { value: "123456" },
+      })
+    );
+
     expect(onCodeSubmit).toHaveBeenCalledWith("123456");
   });
 });

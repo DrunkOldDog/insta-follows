@@ -5,3 +5,4 @@ instagram/*
 .env
 .env.local
 .vscode
+.DS_Store

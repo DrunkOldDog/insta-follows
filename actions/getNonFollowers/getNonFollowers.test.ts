@@ -30,11 +30,11 @@ describe("getNonFollowers", () => {
     const result = await getNonFollowers(formData);
     
     // Assert the result length is 58
-    expect(result).toHaveLength(58);
+    expect(result.nonFollowers).toHaveLength(58);
     
     // Verify it's an array of strings
-    expect(Array.isArray(result)).toBe(true);
-    expect(result.every(item => typeof item === "string")).toBe(true);
+    expect(Array.isArray(result.nonFollowers)).toBe(true);
+    expect(result.nonFollowers.every(item => typeof item === "string")).toBe(true);
   });
 
   it("should return non-followers with expected length of 58 using JSON files", async () => {
@@ -57,10 +57,34 @@ describe("getNonFollowers", () => {
     const result = await getNonFollowers(formData);
     
     // Assert the result length is 58
-    expect(result).toHaveLength(58);
+    expect(result.nonFollowers).toHaveLength(58);
     
     // Verify it's an array of strings
-    expect(Array.isArray(result)).toBe(true);
-    expect(result.every(item => typeof item === "string")).toBe(true);
+    expect(Array.isArray(result.nonFollowers)).toBe(true);
+    expect(result.nonFollowers.every(item => typeof item === "string")).toBe(true);
+  });
+
+  it ("should return the correct followers and following counts", async () => {
+    // Read the HTML mock files
+    const followersHtmlPath = join(__dirname, "__testsMocks__", "followers_1.html");
+    const followingHtmlPath = join(__dirname, "__testsMocks__", "following.html");
+    
+    const followersHtmlContent = readFileSync(followersHtmlPath, "utf-8");
+    const followingHtmlContent = readFileSync(followingHtmlPath, "utf-8");
+
+    const followersFile = createMockFile(followersHtmlContent, "followers.html", "text/html");
+    const followingFile = createMockFile(followingHtmlContent, "following.html", "text/html");
+    
+    // Create FormData with the files
+    const formData = new FormData();
+    formData.append("followers", followersFile);
+    formData.append("following", followingFile);
+    
+    // Call the function
+    const result = await getNonFollowers(formData);
+    
+    // Assert the result length is 58
+    expect(result.followersCount).toBe(1053);
+    expect(result.followingCount).toBe(631);
   });
 });
