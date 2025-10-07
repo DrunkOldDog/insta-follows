@@ -4,11 +4,10 @@ import { getNonFollowers, saveResultsSnapshot } from "@/actions";
 import { Dropzone } from "@/components/shared";
 import { MotionButton } from "@/components/shared/MotionButton";
 import { Spinner } from "@/components/ui";
-import { FollowersReport } from "@/features/InstagramDashboard/components";
 import { AnimatePresence } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { MotionStepCard } from "./components";
+import { FollowersReport, MotionStepCard } from "./components";
 
 import type { NonFollowersResult } from "@/types";
 import type { User } from "@supabase/supabase-js";
