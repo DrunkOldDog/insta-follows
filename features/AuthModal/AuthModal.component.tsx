@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription
 } from "@/components/ui";
 import { motion, AnimatePresence, type HTMLMotionProps } from "motion/react";
 import { PropsWithChildren, useState } from "react";
@@ -27,6 +28,19 @@ export default function AuthModal({ children }: AuthModalProps) {
   const [currentView, setCurrentView] = useState<AuthView>("login");
   const [email, setEmail] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [optError, setOptError] = useState<string | null>(null);
+
+  const onOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      // Reset the form state after the animation
+      setTimeout(() => {
+        setCurrentView("login");
+        setEmail("");
+        setOptError(null);
+      }, 300);
+    }
+  };
 
   const handleSignInWithOpt = async (formData: FormData) => {
     const data = await signInWithOpt(formData);
@@ -54,16 +68,23 @@ export default function AuthModal({ children }: AuthModalProps) {
       setCurrentView("login");
       setEmail("");
     } else {
-      console.error(data.error);
+      setOptError(data.error!);
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="sr-only">Authentication</DialogTitle>
+        <DialogHeader className="mb-2">
+          <DialogTitle>
+            {currentView === "login" ? "Welcome back" : "Enter your code"}
+          </DialogTitle>
+          <DialogDescription className="text-muted-foreground text-sm">
+            {currentView === "login"
+              ? "Sign in to your account"
+              : "Enter the code we sent to your email"}
+          </DialogDescription>
         </DialogHeader>
 
         <AnimatePresence mode="wait">
@@ -75,7 +96,10 @@ export default function AuthModal({ children }: AuthModalProps) {
 
           {currentView === "opt" && (
             <motion.div key="opt" {...formAnimation}>
-              <CodeValidationForm onCodeSubmit={handleOptSubmit} />
+              <CodeValidationForm
+                optError={optError}
+                onCodeSubmit={handleOptSubmit}
+              />
             </motion.div>
           )}
         </AnimatePresence>
