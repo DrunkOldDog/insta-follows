@@ -1,54 +1,35 @@
 "use client";
 
 import { compareLastSnapshots } from "@/actions";
-import { FollowersReport } from "@/components/shared";
+import { Alert, FollowersReport } from "@/components/shared";
 import { MotionSection } from "@/components/shared/MotionSection";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import { StatsSection } from "./components";
 
-import type { User } from "@supabase/supabase-js";
+export default function ComparePageComponent() {
+  const { data, error, isLoading } = useSWR(
+    "compareLastSnapshots",
+    compareLastSnapshots
+  );
 
-interface ComparePageProps {
-  user: User | null;
-}
+  if (error) {
+    return (
+      <section className="py-24 pb-48">
+        <div className="container mx-auto px-6 min-h-[480px]">
+          <Alert variant="danger" className="flex gap-3 max-w-3xl mx-auto">
+            <h3 className="text-sm font-semibold">
+              There was an error on your request.
+            </h3>
+            <p className="text-sm">
+              {error.message} Please try again later or contact support (me).
+            </p>
+          </Alert>
+        </div>
+      </section>
+    );
+  }
 
-interface CompareData {
-  success: boolean;
-  data?: {
-    followersDifference: number;
-    followingDifference: number;
-    newNonFollowers: string[];
-    latestSnapshot: any;
-    previousSnapshot: any;
-  };
-  error?: string;
-}
-
-export default function ComparePageComponent({ user }: ComparePageProps) {
-  const [data, setData] = useState<CompareData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await compareLastSnapshots();
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching comparison data:", error);
-        setData({
-          success: false,
-          error:
-            error instanceof Error ? error.message : "Unknown error occurred",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
+  if (isLoading || !data) {
     return (
       <section className="py-24 pb-48">
         <div className="container mx-auto px-6 min-h-[480px]">
@@ -63,41 +44,13 @@ export default function ComparePageComponent({ user }: ComparePageProps) {
     );
   }
 
-  if (!data || !data.success || data.error) {
-    return (
-      <section className="py-24 pb-48">
-        <div className="container mx-auto px-6 min-h-[480px]">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center text-red-400">
-              <p>Error loading comparison data: {data?.error}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!data.data) {
-    return (
-      <section className="py-24 pb-48">
-        <div className="container mx-auto px-6 min-h-[480px]">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center text-gray-400">
-              <p>No snapshots found. Please analyze your data first.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   const {
     latestSnapshot,
     previousSnapshot,
     followersDifference,
     followingDifference,
     newNonFollowers,
-  } = data.data;
+  } = data;
 
   return (
     <section className="py-24 pb-48">
@@ -108,12 +61,26 @@ export default function ComparePageComponent({ user }: ComparePageProps) {
             description="Compare your latest Instagram data with the previous snapshot."
           >
             {/* Stats Section */}
-            <StatsSection
-              previousCreatedAt={previousSnapshot.created_at}
-              latestCreatedAt={latestSnapshot.created_at}
-              followersDifference={followersDifference}
-              followingDifference={followingDifference}
-            />
+            {previousSnapshot && (
+              <StatsSection
+                previousCreatedAt={previousSnapshot!.created_at}
+                latestCreatedAt={latestSnapshot.created_at}
+                followersDifference={followersDifference}
+                followingDifference={followingDifference}
+              />
+            )}
+
+            {!previousSnapshot && (
+              <Alert variant="warning">
+                <h3 className="text-sm font-semibold">
+                  You must upload two reports to compare your analytics.
+                </h3>
+                <p className="text-sm">
+                  The next time you run a new analysis, you will be able to
+                  compare your followers and following counts.
+                </p>
+              </Alert>
+            )}
 
             {/* Current Non-Followers */}
             <FollowersReport

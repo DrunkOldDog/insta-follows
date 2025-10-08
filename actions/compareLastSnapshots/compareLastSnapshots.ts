@@ -5,10 +5,18 @@ import type { Tables } from "@/lib/supabase/database.types";
 
 type Snapshot = Tables<"snapshots">;
 
-export const compareLastSnapshots = async () => {
-  const supabase = await createClient();
+type CompareLastSnapshotsResponse = {
+  followersDifference: number;
+  followingDifference: number;
+  newNonFollowers: string[];
+  latestSnapshot: Snapshot;
+  previousSnapshot: Snapshot | null;
+};
 
-  try {
+export const compareLastSnapshots =
+  async (): Promise<CompareLastSnapshotsResponse> => {
+    const supabase = await createClient();
+
     // Get the current user
     const {
       data: { user },
@@ -32,19 +40,16 @@ export const compareLastSnapshots = async () => {
     }
 
     if (!snapshots || snapshots.length === 0) {
-      return {
-        success: true,
-        snapshots: [],
-        message: "No snapshots found for this user",
-      };
+      throw new Error("No snapshots found for this user");
     }
 
     if (snapshots.length === 1) {
       return {
-        success: true,
-        snapshots: [snapshots[0]],
-        message: "Only one snapshot found",
-        differences: null,
+        followersDifference: 0,
+        followingDifference: 0,
+        newNonFollowers: [],
+        latestSnapshot: snapshots[0],
+        previousSnapshot: null,
       };
     }
 
@@ -70,20 +75,10 @@ export const compareLastSnapshots = async () => {
     );
 
     return {
-      success: true,
-      data: {
-        followersDifference,
-        followingDifference,
-        newNonFollowers,
-        latestSnapshot,
-        previousSnapshot,
-      },
+      followersDifference,
+      followingDifference,
+      newNonFollowers,
+      latestSnapshot,
+      previousSnapshot,
     };
-  } catch (error) {
-    console.error("Error comparing last snapshots:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error occurred",
-    };
-  }
-};
+  };
