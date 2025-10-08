@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
 
+const UNAUTHORIZED_PATHS = ["/compare"];
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -40,6 +42,12 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user && UNAUTHORIZED_PATHS.includes(request.nextUrl.pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
 
   // IMPORTANT: Uncomment this to redirect users to the login page if they are not logged in
   // if (
