@@ -1,13 +1,13 @@
 "use client";
 
 import { getNonFollowers, saveResultsSnapshot } from "@/actions";
-import { Dropzone } from "@/components/shared";
+import { Dropzone, FollowersReport } from "@/components/shared";
 import { MotionButton } from "@/components/shared/MotionButton";
+import { MotionSection } from "@/components/shared/MotionSection";
 import { Spinner } from "@/components/ui";
 import { AnimatePresence } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FollowersReport, MotionStepCard } from "./components";
 
 import type { NonFollowersResult } from "@/types";
 import type { User } from "@supabase/supabase-js";
@@ -86,7 +86,7 @@ export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
           <AnimatePresence mode="wait">
             {/* Step 1 */}
             {step === AnalyzeStepEnum.Followers && (
-              <MotionStepCard
+              <MotionSection
                 key="step-1"
                 step={1}
                 title="Upload Your Followers Data"
@@ -100,12 +100,12 @@ export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
                   }}
                   onFilesSelected={(files) => handleFollowersFile(files[0])}
                 />
-              </MotionStepCard>
+              </MotionSection>
             )}
 
             {/* Step 2 */}
             {step === AnalyzeStepEnum.Following && (
-              <MotionStepCard
+              <MotionSection
                 key="step-2"
                 step={2}
                 title="Update Your Following Data"
@@ -128,12 +128,12 @@ export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
                 >
                   Back
                 </MotionButton>
-              </MotionStepCard>
+              </MotionSection>
             )}
 
             {/* Step 3 */}
             {step === AnalyzeStepEnum.Results && (
-              <MotionStepCard
+              <MotionSection
                 key="step-3"
                 step={3}
                 title="Analysis Results"
@@ -161,7 +161,7 @@ export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
                     Save Results
                   </MotionButton>
                 </div>
-              </MotionStepCard>
+              </MotionSection>
             )}
           </AnimatePresence>
         </div>
