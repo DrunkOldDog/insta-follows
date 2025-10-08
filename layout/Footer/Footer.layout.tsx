@@ -43,21 +43,22 @@ export default function FooterComponent() {
               </MotionButton>
             </Link>
 
-            <Link
+            {/* TODO: Add buy me a coffee link when project is finished */}
+            {/* <Link
               href="https://buymeacoffee.com/juani"
               target="_blank"
               rel="noopener noreferrer"
+            /> */}
+
+            <MotionButton
+              disabled
+              variant="fancy"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <MotionButton
-                disabled
-                variant="fancy"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Coffee className="w-5 h-5" />
-                <span>Buy me a coffee</span>
-              </MotionButton>
-            </Link>
+              <Coffee className="w-5 h-5" />
+              <span>Buy me a coffee</span>
+            </MotionButton>
           </div>
 
           {/* Made with love section */}

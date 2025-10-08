@@ -1,3 +1,4 @@
 export * from "./AnalyzePage";
-export * from "./InstagramDashboard";
+export * from "./AuthModal";
+export * from "./ComparePage";
 export * from "./LandingPage";

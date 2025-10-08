@@ -2,6 +2,8 @@
 
 import { parse } from "node-html-parser";
 
+import type { NonFollowersResult } from "@/types";
+
 const parseHtmlToList = async (fileContent: File): Promise<string[]> => {
   const htmlContent = await fileContent.text();
   const root = parse(htmlContent);
@@ -40,7 +42,9 @@ const parseFileToList = async (fileContent: File): Promise<string[]> => {
   }
 };
 
-export const getNonFollowers = async (formData: FormData) => {
+export const getNonFollowers = async (
+  formData: FormData
+): Promise<NonFollowersResult> => {
   const followersData = formData.get("followers") as File;
   const followingData = formData.get("following") as File;
 
@@ -65,5 +69,9 @@ export const getNonFollowers = async (formData: FormData) => {
     }
   }
 
-  return nonFollowers;
+  return {
+    nonFollowers,
+    followersCount: followersList.length,
+    followingCount: followingList.length,
+  };
 };
