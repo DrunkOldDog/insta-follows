@@ -1,7 +1,7 @@
 "use client";
 
 import { getNonFollowers, saveResultsSnapshot } from "@/actions";
-import { Dropzone, FollowersReport } from "@/components/shared";
+import { Alert, Dropzone, FollowersReport } from "@/components/shared";
 import { MotionButton } from "@/components/shared/MotionButton";
 import { MotionSection } from "@/components/shared/MotionSection";
 import { Spinner } from "@/components/ui";
@@ -138,10 +138,21 @@ export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
                 step={3}
                 title="Analysis Results"
                 description="Your analysis is complete. Here are the results of your Instagram follower analysis."
+                className="space-y-4"
               >
                 <FollowersReport nonFollowers={results?.nonFollowers || []} />
 
-                <div className="mt-8 flex gap-3 justify-end">
+                {!user && (
+                  <Alert variant="warning">
+                    <p className="text-sm">
+                      <span className="font-medium">Sign in required:</span> You
+                      need to be logged in to save your results and compare them
+                      later.
+                    </p>
+                  </Alert>
+                )}
+
+                <div className="flex gap-2 justify-end">
                   <MotionButton
                     size="lg"
                     variant="outline"

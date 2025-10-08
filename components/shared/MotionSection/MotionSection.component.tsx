@@ -1,9 +1,10 @@
-import { motion } from "motion/react";
+import { type HTMLMotionProps, motion } from "motion/react";
 
-interface MotionSectionProps extends React.PropsWithChildren {
+interface MotionSectionProps extends HTMLMotionProps<"div"> {
   title: string;
   description: string;
   step?: number;
+  children?: React.ReactNode;
 }
 
 export default function MotionSectionComponent({
@@ -11,6 +12,7 @@ export default function MotionSectionComponent({
   title,
   description,
   step,
+  ...props
 }: MotionSectionProps) {
   return (
     <motion.div
@@ -18,6 +20,7 @@ export default function MotionSectionComponent({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -100 }}
       transition={{ duration: 0.6, ease: "easeInOut" as const }}
+      {...props}
     >
       <div className="mb-8">
         {step && (
