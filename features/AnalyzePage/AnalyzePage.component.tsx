@@ -140,6 +140,16 @@ export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
                 description="Your analysis is complete. Here are the results of your Instagram follower analysis."
                 className="space-y-4"
               >
+                <Alert variant="warning">
+                  <p className="text-sm">
+                    <span className="font-medium">Note:</span> With the latest
+                    Instagram API changes, the analysis may not be 100% accurate
+                    as now it includes deleted accounts (I mean, why?! 😡). So,
+                    you may not find some of these users in your following list
+                    on Instagram.
+                  </p>
+                </Alert>
+
                 <FollowersReport nonFollowers={results?.nonFollowers || []} />
 
                 {!user && (
