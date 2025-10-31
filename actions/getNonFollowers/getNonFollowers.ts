@@ -4,13 +4,18 @@ import { parse } from "node-html-parser";
 
 import type { NonFollowersResult } from "@/types";
 
+const extractInstagramUsername = (username: string) => {
+  const segments = username.split("/").filter((segment) => segment !== "");
+  return segments[segments.length - 1]?.toLowerCase() || "";
+};
+
 const parseHtmlToList = async (fileContent: File): Promise<string[]> => {
   const htmlContent = await fileContent.text();
   const root = parse(htmlContent);
 
   return root
     .getElementsByTagName("a")
-    .map((htmlElement) => htmlElement.innerText)
+    .map((htmlElement) => extractInstagramUsername(htmlElement.innerText))
     .sort();
 };
 
@@ -29,7 +34,9 @@ const parseJsonToList = async (fileContent: File): Promise<string[]> => {
     items = data.relationships_following;
   }
 
-  return items.map((item) => item.string_list_data[0].value).sort();
+  return items
+    .map((item) => item.title || item.string_list_data[0].value)
+    .sort();
 };
 
 const parseFileToList = async (fileContent: File): Promise<string[]> => {
