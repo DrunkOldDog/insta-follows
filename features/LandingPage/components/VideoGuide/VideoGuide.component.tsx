@@ -7,7 +7,7 @@ import { PlayCircle, BookOpen, UploadCloud } from "lucide-react";
 
 export default function VideoGuideComponent() {
   return (
-    <section className="py-24 bg-gradient-to-b">
+    <section id="video-guide" className="py-24 bg-gradient-to-b">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -116,7 +116,7 @@ export default function VideoGuideComponent() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="h-full md:col-span-2"
           >
-            <div className="relative w-full overflow-hidden rounded-2xl aspect-video bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 shadow-2xl shadow-black/50 group hover:shadow-indigo-500/20 transition-shadow duration-300">
+            <div className="relative w-full overflow-hidden rounded-2xl aspect-video shadow-2xl shadow-black/50 group hover:shadow-indigo-500/20 transition-shadow duration-300">
               <div className="relative w-full h-full overflow-hidden rounded-2xl">
                 <ReactPlayer
                   src="https://www.youtube.com/watch?v=eOd1rDPZvtk"

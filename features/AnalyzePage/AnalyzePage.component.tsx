@@ -6,6 +6,7 @@ import { MotionButton } from "@/components/shared/MotionButton";
 import { MotionSection } from "@/components/shared/MotionSection";
 import { Spinner } from "@/components/ui";
 import { AnimatePresence } from "motion/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -100,6 +101,16 @@ export default function AnalyzePageComponent({ user }: AnalyzePageProps) {
                   }}
                   onFilesSelected={(files) => handleFollowersFile(files[0])}
                 />
+
+                <div className="mt-4 text-xs text-gray-400">
+                  Don't know where to get your files?{" "}
+                  <Link
+                    href="/#video-guide"
+                    className="text-indigo-300 underline hover:text-indigo-200"
+                  >
+                    Watch the video guide here
+                  </Link>
+                </div>
               </MotionSection>
             )}
 
